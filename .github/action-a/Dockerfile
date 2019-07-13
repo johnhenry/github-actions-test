@@ -11,7 +11,7 @@ LABEL "maintainer"="Octocat <octocat@github.com>"
 ADD entrypoint.sh /entrypoint.sh
 RUN apt-get update && apt-get install git
 RUN npm install -g np
-RUN git config --global user.email "you@example.com"
-RUN git config --global user.name "Your Name"
+RUN git config user.email "you@example.com"
+RUN git config user.name "Your Name"
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
