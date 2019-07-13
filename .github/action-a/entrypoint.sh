@@ -28,7 +28,8 @@ else
     minor2=$(echo $version2 | awk '{print $2}')
     major2=$(echo $version2 | awk '{print $1}')
     update=''
-
+    git config user.email "you@example.com"
+    git config user.name "Your Name"
     if [ $patch1 -lt $patch2 ]; then
         update='PATCH'
     fi
