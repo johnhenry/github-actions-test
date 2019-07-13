@@ -1,8 +1,8 @@
-workflow "build and test" {
+workflow "New workflow" {
     on = "push"
-    resolves = ["update"]
+    resolves = ["action a""]
 }
 
-action "update" {
+action "action a" {
     uses = "./action-a/"
 }
