@@ -1,4 +1,4 @@
-FROM node:12.6-stretch-slim
+FROM node:12.6-stretch
 LABEL "com.github.actions.name"="Hello World"
 LABEL "com.github.actions.description"="Write arguments to the standard output"
 LABEL "com.github.actions.icon"="mic"
