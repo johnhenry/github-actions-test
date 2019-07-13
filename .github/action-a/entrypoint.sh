@@ -1,17 +1,21 @@
 #!/bin/bash -l
-VERSION=$(cat package.json \
-    | grep version \
-    | head -1 \
-    | awk -F: '{ print $2 }' \
-    | sed 's/[",]//g' \
-    | tr -d '[[:space:]]')
+# VERSION=$(cat package.json \
+#     | grep version \
+#     | head -1 \
+#     | awk -F: '{ print $2 }' \
+#     | sed 's/[",]//g' \
+#     | tr -d '[[:space:]]')
 # https://gist.github.com/DarrenN/8c6a5b969481725a4413
-NEW_VERSION=$(cat package.json \
-    | grep newVersion \
-    | head -1 \
-    | awk -F: '{ print $2 }' \
-    | sed 's/[",]//g' \
-    | tr -d '[[:space:]]')
+# NEW_VERSION=$(cat package.json \
+#     | grep newVersion \
+#     | head -1 \
+#     | awk -F: '{ print $2 }' \
+#     | sed 's/[",]//g' \
+#     | tr -d '[[:space:]]')
+
+VERSION=$(jq -r ".version" package.json)
+NEW_VERSION=$(jq -r ".newVersion" package.json)
+
 if [ "$VERSION" == "$NEW_VERSION" ]; then
     echo 'NO UPDATE'
     exit 0
@@ -47,8 +51,8 @@ else
     minor2=$(echo $version2 | awk '{print $2}')
     major2=$(echo $version2 | awk '{print $1}')
     update=''
-    git config user.email "you@example.com"
-    git config user.name "Your Name"
+    git config user.email "noreply@github.com"
+    git config user.name "(none)"
     if [ $patch1 -lt $patch2 ]; then
         update='PATCH'
     fi
@@ -68,11 +72,15 @@ else
     elif  [ "PATCH" = $update ]; then
         echo 'PATCH'
     fi
-    np $NEW_VERSION
+    str=$(jq -r ".repository.url" package.json)
+    regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
+    if [[ $str =~ $regex ]]; then
+        user=${BASH_REMATCH[1]}
+        repo=${BASH_REMATCH[2]}
+        git remote rm origin
+        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+        np $NEW_VERSION && git push origin master && git push --tags origin master
+    fi
 
-    git remote rm origin
-    git remote add origin https://johnhenry:$GITHUB_TOKEN@github.com/johnhenry/github-actions-test.git
-    git push origin master
-    git push --tags origin master
     exit 0
 fi

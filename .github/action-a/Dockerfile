@@ -9,7 +9,7 @@ LABEL "homepage"="http://github.com/actions"
 LABEL "maintainer"="Octocat <octocat@github.com>"
 
 ADD entrypoint.sh /entrypoint.sh
-RUN apt-get update && apt-get install git
+RUN apt-get update && apt-get install git jq
 RUN npm install -g np
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
