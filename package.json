@@ -1,7 +1,7 @@
 {
   "name": "github-actions-test",
-  "version": "0.0.4",
-  "newVersion": "0.0.5",
+  "version": "0.0.5",
+  "newVersion": "0.0.6",
   "description": "",
   "main": "index.js",
   "private": false,
