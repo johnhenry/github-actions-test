@@ -1,9 +1,10 @@
 {
   "name": "github-actions-test",
   "version": "0.0.3",
+  "newVersion": "0.0.3",
   "description": "",
   "main": "index.js",
-  "private":true,
+  "private": true,
   "scripts": {
     "test": "echo \"Tests passing\" && exit 0"
   },
@@ -13,6 +14,6 @@
     "tape": "4.11.0"
   },
   "repository": {
-      "url": "git://github.com/johnhenry/github-actions-test.git"
+    "url": "git://github.com/johnhenry/github-actions-test.git"
   }
 }
