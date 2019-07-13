@@ -1,4 +1,5 @@
 #!/bin/sh -l
+
 OLD_VERSION=$(git describe --abbrev=0 --tags)
 PACKAGE_VERSION=$(cat package.json \
   | grep version \
