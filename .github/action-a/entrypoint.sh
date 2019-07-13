@@ -1,4 +1,4 @@
-#!/bin/sh -l
+#!/bin/bash -l
 
 OLD_VERSION=$(git describe --abbrev=0 --tags)
 # https://gist.github.com/DarrenN/8c6a5b969481725a4413
