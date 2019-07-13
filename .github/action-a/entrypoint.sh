@@ -69,6 +69,9 @@ else
         echo 'PATCH'
     fi
     np $NEW_VERSION
+
+    git remote rm origin
+    git remote add origin https://johnhenry:$GITHUB_TOKEN@github.com/johnhenry/github-actions-test.git
     git push origin master
     git push --tags origin master
     exit 0

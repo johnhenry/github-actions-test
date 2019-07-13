@@ -5,5 +5,5 @@ workflow "New workflow" {
 
 action "action a" {
     uses = "./.github/action-a/"
-    secrets = ["NPM_AUTH_TOKEN", "NPM_DUMMY_TOKEN"]
+    secrets = ["NPM_AUTH_TOKEN", "GITHUB_TOKEN"]
 }
