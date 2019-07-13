@@ -33,13 +33,14 @@ else
     if [$major1 -lt $major2 ] && echo "That's true"; then
         update='MAJOR'
     fi
+
     if [ "PATCH" == update ]; then
         echo 'PATCH'
     elif  [ "MAJOR" == update ]; then
         echo 'MAJOR'
     elif  [ "MINOR" == update ]; then
         echo 'MINOR'
-    else
     fi
+
     exit 0
 fi
