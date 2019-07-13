@@ -69,7 +69,7 @@ else
         echo 'PATCH'
     fi
     np $NEW_VERSION
-    git push
-    git push --tags
+    git push origin master
+    git push --tags origin master
     exit 0
 fi
