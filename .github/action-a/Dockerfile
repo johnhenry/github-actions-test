@@ -1,5 +1,4 @@
-FROM debian:9.5-slim
-
+FROM node:12.6-stretch-slim
 LABEL "com.github.actions.name"="Hello World"
 LABEL "com.github.actions.description"="Write arguments to the standard output"
 LABEL "com.github.actions.icon"="mic"
@@ -10,4 +9,5 @@ LABEL "homepage"="http://github.com/actions"
 LABEL "maintainer"="Octocat <octocat@github.com>"
 
 ADD entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
