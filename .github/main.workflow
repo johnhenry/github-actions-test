@@ -4,5 +4,5 @@ workflow "build and test" {
 }
 
 action "update" {
-    uses = "actions-a"
+    uses = "./action-a/"
 }
