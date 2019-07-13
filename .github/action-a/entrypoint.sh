@@ -1,5 +1,5 @@
 #!/bin/bash -l
-
+echo "DUMMY: $NPM_DUMMY_TOKEN"
 VERSION=$(cat package.json \
     | grep version \
     | head -1 \
