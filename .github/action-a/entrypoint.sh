@@ -13,6 +13,7 @@ if [ "$OLD_VERSION" == "$CURRENT_VERSION" ]; then
     exit 0
 else
     git tag $CURRENT_VERSION
+    git push --tags
     echo "UPDATE: $OLD_VERSION -> $CURRENT_VERSION"
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
     version1=${OLD_VERSION//./ }
