@@ -12,6 +12,7 @@ if [ "$OLD_VERSION" == "$CURRENT_VERSION" ]; then
     echo 'NO UPDATE'
     exit 0
 else
+    echo 'UPDATE'
     git tag CURRENT_VERSION
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
     version1=${OLD_VERSION//./ }
@@ -32,15 +33,13 @@ else
     if [$major1 -lt $major2 ] && echo "That's true"; then
         update='MAJOR'
     fi
-
     if [ "PATCH" == update ]; then
-
-    else if  [ "MAJOR" == update ]; then
-
-    else if  [ "MINOR" == update ]; then
-
+        echo 'PATCH'
+    elif  [ "MAJOR" == update ]; then
+        echo 'MAJOR'
+    elif  [ "MINOR" == update ]; then
+        echo 'MINOR'
     else
     fi
-
     exit 0
 fi
