@@ -14,8 +14,6 @@ if [ "$OLD_VERSION" == "$CURRENT_VERSION" ]; then
 else
     echo "UPDATE: $OLD_VERSION -> $CURRENT_VERSION"
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
-    version1=${version1//v/}
-    version2=${version2//v/}
     git tag $CURRENT_VERSION
     version1=${OLD_VERSION//./ }
     version2=${CURRENT_VERSION//./ }
