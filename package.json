@@ -4,7 +4,7 @@
   "newVersion": "0.0.4",
   "description": "",
   "main": "index.js",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "echo \"Tests passing\" && exit 0"
   },

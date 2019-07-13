@@ -1,6 +1,4 @@
 #!/bin/bash -l
-TK=${NPM_DUMMY_TOKEN// /.}
-echo "DUMMY: $TK"
 VERSION=$(cat package.json \
     | grep version \
     | head -1 \
