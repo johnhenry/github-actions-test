@@ -24,13 +24,16 @@ else
     minor2=$(echo $version2 | awk '{print $2}')
     major2=$(echo $version2 | awk '{print $1}')
     update=''
-    if [$patch1 -lt $patch2 ]; then
+
+    if [ $patch1 -lt $patch2 ]; then
         update='PATCH'
     fi
-    if [$minor1 -lt $minor2 ]; then
+
+    if [ $minor1 -lt $minor2 ]; then
         update='MINOR'
     fi
-    if [$major1 -lt $major2 ]; then
+
+    if [ $major1 -lt $major2 ]; then
         update='MAJOR'
     fi
 
