@@ -3,6 +3,7 @@
   "version": "0.0.3",
   "description": "",
   "main": "index.js",
+  "private":true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,5 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "tape": "4.11.0"
+  },
+  "repository": {
+      "url": "git://github.com/johnhenry/github-actions-test.git"
   }
 }
