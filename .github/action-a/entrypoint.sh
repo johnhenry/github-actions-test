@@ -13,8 +13,10 @@ if [ "$OLD_VERSION" == "$CURRENT_VERSION" ]; then
     exit 0
 else
     echo "UPDATE: $OLD_VERSION -> $CURRENT_VERSION"
-    git tag $CURRENT_VERSION
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
+    version1=${version1//v/}
+    version2=${version2//v/}
+    git tag $CURRENT_VERSION
     version1=${OLD_VERSION//./ }
     version2=${CURRENT_VERSION//./ }
     patch1=$(echo $version1 | awk '{print $3}')
@@ -37,11 +39,11 @@ else
         update='MAJOR'
     fi
 
-    if [ "PATCH" == update ]; then
+    if [ "PATCH" = update ]; then
         echo 'PATCH'
-    elif  [ "MAJOR" == update ]; then
+    elif  [ "MAJOR" = update ]; then
         echo 'MAJOR'
-    elif  [ "MINOR" == update ]; then
+    elif  [ "MINOR" = update ]; then
         echo 'MINOR'
     fi
 
