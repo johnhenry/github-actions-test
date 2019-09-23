@@ -92,12 +92,13 @@ else
 We noticed you updated the package.version
 We roll this back and update this automatically upon publishing"
         git push origin master
-        
-        # git clone --no-checkout ../temp
+        branch=$(git rev-parse HEAD)
+        git checkout master
+        git rebase $branch        
         # # publish new version
-        # np $NEW_VERSION
-        # git push origin master
-        # git push --tags origin master
+        np $NEW_VERSION
+        git push origin master
+        git push --tags origin master
     fi
     exit 0
 fi
