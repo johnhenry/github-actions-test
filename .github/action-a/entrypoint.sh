@@ -54,22 +54,22 @@ else
     git config user.email "noreply@github.com"
     git config user.name "(none)"
     if [ $patch1 -lt $patch2 ]; then
-        update='PATCH'
+        update='patch'
     fi
 
     if [ $minor1 -lt $minor2 ]; then
-        update='MINOR'
+        update='minor'
     fi
 
     if [ $major1 -lt $major2 ]; then
-        update='MAJOR'
+        update='major'
     fi
 
-    if [ "MAJOR" = $update ]; then
+    if [ "major" = $update ]; then
         echo 'MAJOR'
-    elif  [ "MINOR" = $update ]; then
+    elif  [ "minor" = $update ]; then
         echo 'MINOR'
-    elif  [ "PATCH" = $update ]; then
+    elif  [ "patch" = $update ]; then
         echo 'PATCH'
     fi
     str=$(jq -r ".repository.url" package.json)
@@ -96,7 +96,8 @@ We roll this back and update this automatically upon publishing"
         git checkout master
         git rebase $branch        
         # # publish new version
-        np $NEW_VERSION
+        npm version $update
+        # np $NEW_VERSION
         git push origin master
         git push --tags origin master
     fi
