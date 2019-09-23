@@ -75,45 +75,38 @@ else
     str=$(jq -r ".repository.url" package.json)
     regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
     if [[ $str =~ $regex ]]; then
-        # set package verstion to desired version
-        jq ".version = \"$VERSION\"" package.json > package.temp.json
-        mv package.temp.json package.json
-        git add package.json
-        git commit --message "Pre-publish commit
-$NEW_VERSION -> $VERSION"
-        #
+        # set remote origin
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
         git remote rm origin
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+        # set package version to original
+        ## create package with older version
+        jq ".version = \"$VERSION\"" package.json > package.temp.json
+        ## replace package
+        mv package.temp.json package.json
+        ## add package
+        git add package.json
+        ## commit
+        git commit --message "Pre-publish commit
+$NEW_VERSION -> $VERSION"
         git push origin master
+        # publish new version
 
-        username = $(git config user.name)
-        email = $(git config user.email)
-        echo "user $username"
-        echo "email $email"
-        mkdir publish/
-        git clone . new-dist/
-        mv new-dist/.git publish/.git
-        rm -rf new-dist/
-        cp readme.md publish/
-        cp package.json publish/
-        cp -R ./dist publish/dist
-        cd publish
-        git config user.name $username
-        git config user.email $email
-        git remote rm origin
-        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+        ordir = $(pwd)
+        git clone --no-checkout ../temp
+        cp -R dist/ ../temp/dist/
+        cp package.json ../temp/package.json
+        cp readme.md ../temp-repo/readme.md
+        cd ../temp-repo/
         git add .
-        git commit -m "remove extraneous for $NEW_VERSION"
+        git commit -m "remove cruft for: $NEW_VERSION"
+        git push origin master
+        cd $ordir
 
         np $NEW_VERSION
-        git push origin publish
-        git push --tags origin publish
-
-        # np $NEW_VERSION
-        # git push origin master
-        # git push --tags origin master
+        git push origin master
+        git push --tags origin master
     fi
     exit 0
 fi
