@@ -92,14 +92,17 @@ else
         git add package.json
         ## commit
         git commit --message "$NEW_VERSION -> $VERSION
-We noticed you updated the package.version
-We roll this back and update this automatically upon publishing"
+We noticed an update to the package version
+Anytime this happens, we roll back the version and
+update it automatically"
         git checkout master
         git rebase temp
         git push origin master
         echo 'this far'
         echo `git remote -v`
         # publish new version
+        git remote rm origin
+        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         np $NEW_VERSION
         git push origin master
         git push --tags origin master
