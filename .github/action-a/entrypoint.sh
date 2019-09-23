@@ -88,10 +88,10 @@ $NEW_VERSION -> $VERSION"
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         git push origin master
 
-        echo "user ${user}"
-        echo "repo ${repo}"
-        echo "name ${git config --global user.name}"
-        echo "email ${git config --global user.email}"
+        echo "user $user"
+        echo "repo $repo"
+        echo "name `git config --global user.name`"
+        echo "email `git config --global user.email`"
 
         # mkdir publish/
         # git clone . new-dist/
@@ -105,7 +105,6 @@ $NEW_VERSION -> $VERSION"
         # git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         # git add .
         # git commit -m "remove extraneous for $NEW_VERSION"
-
 
         np $NEW_VERSION
         git push origin master
