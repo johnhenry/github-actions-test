@@ -95,7 +95,7 @@ else
 We noticed you updated the package.version
 We roll this back and update this automatically upon publishing"
         git checkout master
-        git pull --rebase temp
+        git rebase temp
         git push origin master
         # publish new version
         np $NEW_VERSION
