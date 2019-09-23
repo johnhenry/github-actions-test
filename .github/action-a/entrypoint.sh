@@ -78,6 +78,8 @@ else
         # set remote origin
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
+        echo `user $user`
+        echo `repo $repo`
         git remote rm origin
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         # set package version to original
@@ -88,8 +90,7 @@ else
         ## add package
         git add package.json
         ## commit
-        echo `user $(user)`
-        echo `repo $(repo)`
+
         git commit --message "$NEW_VERSION -> $VERSION
 We noticed you updated the package.version
 We roll this back and update this automatically upon publishing"
