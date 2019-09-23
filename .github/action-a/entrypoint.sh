@@ -88,9 +88,12 @@ else
         ## add package
         git add package.json
         ## commit
+        echo `user ${user}`
+        echo `repo ${repo}`
         git commit --message "$NEW_VERSION -> $VERSION
 We noticed you updated the package.version
 We roll this back and update this automatically upon publishing"
+        echo $(git status)
         git push origin master
         # publish new version
         np $NEW_VERSION
