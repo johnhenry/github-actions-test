@@ -103,6 +103,8 @@ $NEW_VERSION -> $VERSION"
         echo 1
         echo `pwd`
         echo `git status`
+        echo `$user/$repo`
+
         np $NEW_VERSION
         git push origin publish
         git push --tags origin publish
