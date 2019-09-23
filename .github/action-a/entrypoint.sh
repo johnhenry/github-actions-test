@@ -100,10 +100,10 @@ $NEW_VERSION -> $VERSION"
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         git add .
         git commit -m "remove extraneous for $NEW_VERSION"
+        echo `$user/$repo`
         echo 1
         echo `pwd`
         echo `git status`
-        echo `$user/$repo`
 
         np $NEW_VERSION
         git push origin publish
