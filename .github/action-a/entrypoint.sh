@@ -94,7 +94,7 @@ $NEW_VERSION -> $VERSION"
         # publish new version
 
         ordir = $(pwd)
-        git clone --no-checkout ../temp
+        git clone . --no-checkout ../temp
         cp -R dist/ ../temp/dist/
         cp package.json ../temp/package.json
         cp readme.md ../temp/readme.md
