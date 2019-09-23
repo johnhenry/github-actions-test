@@ -76,10 +76,10 @@ else
     regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
     if [[ $str =~ $regex ]]; then
         # set package verstion to desired version
-        # jq ".version = '$VERSION'" package.json > package.temp.json
-        # mv package.temp.json package.json
-        # git add package.json
-        # git commit --amend --no-edit
+        jq ".version = '$VERSION'" package.json > package.temp.json
+        mv package.temp.json package.json
+        git add package.json
+        git commit --amend --no-edit
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
         git remote rm origin
