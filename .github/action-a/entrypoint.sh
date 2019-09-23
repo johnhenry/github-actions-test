@@ -87,7 +87,8 @@ $NEW_VERSION -> $VERSION"
         git remote rm origin
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         git push origin master
-
+        echo 'userREPO'
+        echo `$user/$repo`
         mkdir publish/
         git clone . new-dist/
         mv new-dist/.git publish/.git
