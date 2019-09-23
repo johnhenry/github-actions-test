@@ -13,8 +13,8 @@
 #     | sed 's/[",]//g' \
 #     | tr -d '[[:space:]]')
 
-VERSION=$(jq -r ".version" package.json)
-NEW_VERSION=$(jq -r ".newVersion" package.json)
+VERSION=$(git show HEAD~1:package.json | jq -r ".version")
+NEW_VERSION=$(git show HEAD~0:package.json | jq -r ".version")
 
 if [ "$VERSION" == "$NEW_VERSION" ]; then
     echo 'NO UPDATE'
@@ -75,6 +75,11 @@ else
     str=$(jq -r ".repository.url" package.json)
     regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
     if [[ $str =~ $regex ]]; then
+        # set package verstion to desired version
+        # jq ".version = '$VERSION'" package.json > package.temp.json
+        # mv package.temp.json package.json
+        # git add package.json
+        # git commit --amend --no-edit
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
         git remote rm origin
