@@ -76,12 +76,12 @@ else
     regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
     if [[ $str =~ $regex ]]; then
         # set remote origin
-        user=${BASH_REMATCH[1]}
-        repo=${BASH_REMATCH[2]}
-        echo "user $user"
-        echo "repo $repo"
-        git remote rm origin
-        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+        # user=${BASH_REMATCH[1]}
+        # repo=${BASH_REMATCH[2]}
+        # echo "user $user"
+        # echo "repo $repo"
+        # git remote rm origin
+        # git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         # set package version to original
         ## create package with older version
         jq ".version = \"$VERSION\"" package.json > package.temp.json
