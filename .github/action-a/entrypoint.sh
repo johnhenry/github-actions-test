@@ -98,7 +98,7 @@ We roll this back and update this automatically upon publishing"
         git rebase temp
         git push origin master
         echo 'this far'
-        echo `git remote origin -v`
+        echo `git remote -v`
         # publish new version
         np $NEW_VERSION
         git push origin master
