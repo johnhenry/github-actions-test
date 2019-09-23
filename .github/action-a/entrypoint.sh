@@ -101,31 +101,31 @@ update it automatically"
         # git push --tags origin master
     fi
     
-    if [[ $str =~ $regex ]]; then
-        # set remote origin
-        user=${BASH_REMATCH[1]}
-        repo=${BASH_REMATCH[2]}
-        git remote rm origin
-        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
-        # set package version to original
-        ## create package with older version
-        jq ".version = \"$VERSION\"" package.json > package.temp.json
-        ## replace package
-        mv package.temp.json package.json
-        ## add package
-        git add package.json
-        ## commit
-        git commit --message "$NEW_VERSION -> $VERSION
-We noticed an update to the package version
-Anytime this happens, we roll back the version and
-update it automatically"
-        git push origin master
-        echo 'this far'
-        echo `git remote -v`
-        # publish new version
-        np $NEW_VERSION
-        git push origin master
-        git push --tags origin master
-    fi
+#     if [[ $str =~ $regex ]]; then
+#         # set remote origin
+#         user=${BASH_REMATCH[1]}
+#         repo=${BASH_REMATCH[2]}
+#         git remote rm origin
+#         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+#         # set package version to original
+#         ## create package with older version
+#         jq ".version = \"$VERSION\"" package.json > package.temp.json
+#         ## replace package
+#         mv package.temp.json package.json
+#         ## add package
+#         git add package.json
+#         ## commit
+#         git commit --message "$NEW_VERSION -> $VERSION
+# We noticed an update to the package version
+# Anytime this happens, we roll back the version and
+# update it automatically"
+#         git push origin master
+#         echo 'this far'
+#         echo `git remote -v`
+#         # publish new version
+#         np $NEW_VERSION
+#         git push origin master
+#         git push --tags origin master
+#     fi
     exit 0
 fi
