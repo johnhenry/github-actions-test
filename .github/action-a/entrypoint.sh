@@ -17,7 +17,7 @@ VERSION=$(git show HEAD~1:package.json | jq -r ".version")
 NEW_VERSION=$(git show HEAD~0:package.json | jq -r ".version")
 
 if [ "$VERSION" == "$NEW_VERSION" ]; then
-    echo "NO UPDATE $VESION > $NEW_VERSION"
+    echo "NO UPDATE $VERSION > $NEW_VERSION"
     exit 0
 else
     if [ -n "$NPM_AUTH_TOKEN" ]; then
