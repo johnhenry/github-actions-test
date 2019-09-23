@@ -80,7 +80,7 @@ else
         mv package.temp.json package.json
         git add package.json
         git commit --message "Pre-publish commit
-$VERSION => $NEW_VERSION"
+$NEW_VERSION -> $VERSION"
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
         git remote rm origin
