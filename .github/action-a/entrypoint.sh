@@ -38,8 +38,6 @@ else
     fi
 
 
-
-
     echo "UPDATE: $VERSION -> $NEW_VERSION"
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
     version1=${VERSION//./ }
@@ -54,26 +52,55 @@ else
     git config user.email "noreply@github.com"
     git config user.name "(none)"
     if [ $patch1 -lt $patch2 ]; then
-        update='PATCH'
+        update='patch'
     fi
 
     if [ $minor1 -lt $minor2 ]; then
-        update='MINOR'
+        update='minor'
     fi
 
     if [ $major1 -lt $major2 ]; then
-        update='MAJOR'
+        update='major'
     fi
 
-    if [ "MAJOR" = $update ]; then
+    if [ "major" = $update ]; then
         echo 'MAJOR'
-    elif  [ "MINOR" = $update ]; then
+    elif  [ "minor" = $update ]; then
         echo 'MINOR'
-    elif  [ "PATCH" = $update ]; then
+    elif  [ "patch" = $update ]; then
         echo 'PATCH'
     fi
     str=$(jq -r ".repository.url" package.json)
     regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
+    if [[ $str =~ $regex ]]; then
+        # set remote origin
+        user=${BASH_REMATCH[1]}
+        repo=${BASH_REMATCH[2]}
+        git remote rm origin
+        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+        # set package version to original
+        ## create package with older version
+        jq ".version = \"$VERSION\"" package.json > package.temp.json
+        ## replace package
+        mv package.temp.json package.json
+        ## add package
+        git add package.json
+        ## commit
+        git commit --message "$NEW_VERSION -> $VERSION
+We noticed an update to the package version
+Anytime this happens, we roll back the version and
+update it automatically"
+        npm version $update
+        git push origin master
+        # git push origin master
+        # echo 'this far'
+        # echo `git remote -v`
+        # # publish new version
+        # np $NEW_VERSION
+        # git push origin master
+        # git push --tags origin master
+    fi
+    
     if [[ $str =~ $regex ]]; then
         # set remote origin
         user=${BASH_REMATCH[1]}
