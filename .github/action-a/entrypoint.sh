@@ -84,17 +84,18 @@ else
         # git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         # set package version to original
         ## create package with older version
+        git checkout -b temp
         jq ".version = \"$VERSION\"" package.json > package.temp.json
         ## replace package
         mv package.temp.json package.json
         ## add package
         git add package.json
         ## commit
-
         git commit --message "$NEW_VERSION -> $VERSION
 We noticed you updated the package.version
 We roll this back and update this automatically upon publishing"
-        echo $(git status)
+        git checkout master
+        git pull --rebase temp
         git push origin master
         # publish new version
         np $NEW_VERSION
