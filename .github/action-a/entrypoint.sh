@@ -97,8 +97,8 @@ $NEW_VERSION -> $VERSION"
         git clone --no-checkout ../temp
         cp -R dist/ ../temp/dist/
         cp package.json ../temp/package.json
-        cp readme.md ../temp-repo/readme.md
-        cd ../temp-repo/
+        cp readme.md ../temp/readme.md
+        cd ../temp/
         git add .
         git commit -m "remove cruft for: $NEW_VERSION"
         git push origin master
