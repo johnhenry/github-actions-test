@@ -79,13 +79,13 @@ else
         jq ".version = \"$VERSION\"" package.json > package.temp.json
         mv package.temp.json package.json
         git add package.json
-        git commit --amend --no-edit
+        git commit --message "Pre-publish commit
+$VERSION => $NEW_VERSION"
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
         git remote rm origin
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         np $NEW_VERSION && git push origin master && git push --tags origin master
     fi
-
     exit 0
 fi
