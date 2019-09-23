@@ -81,11 +81,29 @@ else
         git add package.json
         git commit --message "Pre-publish commit
 $NEW_VERSION -> $VERSION"
+        #
         user=${BASH_REMATCH[1]}
         repo=${BASH_REMATCH[2]}
         git remote rm origin
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
-        np $NEW_VERSION && git push origin master && git push --tags origin master
+        git push origin master
+
+        mkdir publish/
+        git clone . new-dist/
+        mv new-dist/.git publish/.git
+        rm -rf new-dist/
+        cp readme.md publish/
+        cp package.json publish/
+        cp -R ./dist publish/dist
+        cd publish
+        git remote rm origin
+        git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
+        git add .
+
+        git commit -m "remove extraneous for $NEW_VERSION"
+        np $NEW_VERSION
+        git push origin publish
+        git push --tags origin publish
     fi
     exit 0
 fi
