@@ -99,8 +99,9 @@ $NEW_VERSION -> $VERSION"
         git remote rm origin
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         git add .
-
         git commit -m "remove extraneous for $NEW_VERSION"
+        echo 1
+        echo pwd
         np $NEW_VERSION
         git push origin publish
         git push --tags origin publish
