@@ -82,7 +82,6 @@ else
         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
         # set package version to original
         ## create package with older version
-        git checkout -b temp
         jq ".version = \"$VERSION\"" package.json > package.temp.json
         ## replace package
         mv package.temp.json package.json
@@ -93,8 +92,6 @@ else
 We noticed an update to the package version
 Anytime this happens, we roll back the version and
 update it automatically"
-        git checkout master
-        git rebase temp
         git push origin master
         echo 'this far'
         echo `git remote -v`
