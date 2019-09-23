@@ -17,7 +17,7 @@ VERSION=$(git show HEAD~1:package.json | jq -r ".version")
 NEW_VERSION=$(git show HEAD~0:package.json | jq -r ".version")
 
 if [ "$VERSION" == "$NEW_VERSION" ]; then
-    echo 'NO UPDATE'
+    echo "NO UPDATE $VESION > $NEW_VERSION"
     exit 0
 else
     if [ -n "$NPM_AUTH_TOKEN" ]; then
@@ -76,7 +76,7 @@ else
     regex='github\.com\/(:?[^\/]+)\/(:?[^\/]+)'
     if [[ $str =~ $regex ]]; then
         # set package verstion to desired version
-        jq ".version = '$VERSION'" package.json > package.temp.json
+        jq ".version = \"$VERSION\"" package.json > package.temp.json
         mv package.temp.json package.json
         git add package.json
         git commit --amend --no-edit
