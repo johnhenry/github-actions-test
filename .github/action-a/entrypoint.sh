@@ -38,6 +38,8 @@ else
     fi
 
 
+
+
     echo "UPDATE: $VERSION -> $NEW_VERSION"
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
     version1=${VERSION//./ }
@@ -52,22 +54,22 @@ else
     git config user.email "noreply@github.com"
     git config user.name "(none)"
     if [ $patch1 -lt $patch2 ]; then
-        update='patch'
+        update='PATCH'
     fi
 
     if [ $minor1 -lt $minor2 ]; then
-        update='minor'
+        update='MINOR'
     fi
 
     if [ $major1 -lt $major2 ]; then
-        update='major'
+        update='MAJOR'
     fi
 
-    if [ "major" = $update ]; then
+    if [ "MAJOR" = $update ]; then
         echo 'MAJOR'
-    elif  [ "minor" = $update ]; then
+    elif  [ "MINOR" = $update ]; then
         echo 'MINOR'
-    elif  [ "patch" = $update ]; then
+    elif  [ "PATCH" = $update ]; then
         echo 'PATCH'
     fi
     str=$(jq -r ".repository.url" package.json)
@@ -87,45 +89,13 @@ else
         git add package.json
         ## commit
         git commit --message "$NEW_VERSION -> $VERSION
-We noticed an update to the package version
-Anytime this happens, we roll back the version and
-update it automatically"
-        npm version $update
+We noticed you updated the package.version
+We roll this back and update this automatically upon publishing"
         git push origin master
-        # git push origin master
-        # echo 'this far'
-        # echo `git remote -v`
-        # # publish new version
-        # np $NEW_VERSION
-        # git push origin master
-        # git push --tags origin master
+        # publish new version
+        np $NEW_VERSION
+        git push origin master
+        git push --tags origin master
     fi
-    
-#     if [[ $str =~ $regex ]]; then
-#         # set remote origin
-#         user=${BASH_REMATCH[1]}
-#         repo=${BASH_REMATCH[2]}
-#         git remote rm origin
-#         git remote add origin https://$user:$GITHUB_TOKEN@github.com/$user/$repo
-#         # set package version to original
-#         ## create package with older version
-#         jq ".version = \"$VERSION\"" package.json > package.temp.json
-#         ## replace package
-#         mv package.temp.json package.json
-#         ## add package
-#         git add package.json
-#         ## commit
-#         git commit --message "$NEW_VERSION -> $VERSION
-# We noticed an update to the package version
-# Anytime this happens, we roll back the version and
-# update it automatically"
-#         git push origin master
-#         echo 'this far'
-#         echo `git remote -v`
-#         # publish new version
-#         np $NEW_VERSION
-#         git push origin master
-#         git push --tags origin master
-#     fi
     exit 0
 fi
