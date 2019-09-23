@@ -88,22 +88,11 @@ else
         ## add package
         git add package.json
         ## commit
-        git commit --message "Pre-publish commit
-$NEW_VERSION -> $VERSION"
+        git commit --message "$NEW_VERSION -> $VERSION
+We noticed you updated the package.version
+We roll this back and update this automatically upon publishing"
         git push origin master
         # publish new version
-
-        ordir = $(pwd)
-        git clone . --no-checkout ../temp
-        cp -R dist/ ../temp/dist/
-        cp package.json ../temp/package.json
-        cp readme.md ../temp/readme.md
-        cd ../temp/
-        git add .
-        git commit -m "remove cruft for: $NEW_VERSION"
-        git push origin master
-        cd $ordir
-
         np $NEW_VERSION
         git push origin master
         git push --tags origin master
