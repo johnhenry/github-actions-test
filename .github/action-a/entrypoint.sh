@@ -58,9 +58,8 @@ else
     if [ $major1 -lt $major2 ]; then
         UPDATE='MAJOR'
     fi
-
+    git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
     echo "UPDATING VERSION: $VERSION => $NEW_VERSION ($UPDATE)"
-
     np $NEW_VERSION
     git push origin master
     git push --tags origin master
