@@ -1,11 +1,20 @@
-on: push
-name: New workflow
+name: Publish Workflow
+on:
+  push:
+    branches:
+    - master
 jobs:
-  actiona:
-    name: action a
+  Publish_Workflow:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
+    - name: Checkout repo
+      uses: actions/checkout@v1.0.0
+    - name: Git Identity
+      run: git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Prepare repository
+      run: git checkout "${GITHUB_REF:11}"
     - name: action a
       uses: ./.github/action-a/
       env:
