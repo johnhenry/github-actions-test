@@ -1,0 +1,2 @@
+mkdir -p ./dist
+cat ./src/index > ./dist/index
