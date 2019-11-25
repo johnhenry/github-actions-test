@@ -1,5 +1,5 @@
 ---
-name: PULL REQUEST
+name: PR
 about: Create a report to help us improve
 title: ''
 labels: ''
