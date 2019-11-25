@@ -1,0 +1,4 @@
+cat .gitignore > .npmignore
+echo '.gitignore' >> .npmignore
+echo '.script/' >> .npmignore
+echo '.github/' >> .npmignore
