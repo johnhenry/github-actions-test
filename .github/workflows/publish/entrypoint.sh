@@ -48,11 +48,6 @@ else
     git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
     echo "UPDATING VERSION: $VERSION => $NEW_VERSION ($UPDATE)"
 
-    cat .gitignore > .npmignore
-    echo '.gitignore' >> .npmignore
-    echo '.script/' >> .npmignore
-    echo '.github/' >> .npmignore
-
     np $NEW_VERSION
     git push origin master
     git push --tags origin master
