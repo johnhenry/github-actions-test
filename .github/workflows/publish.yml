@@ -39,8 +39,8 @@ jobs:
         fi
         if [ $major1 -lt $major2 ]; then
             UPDATE='MAJOR'
-        fi
-        echo "$VERSION => $NEW_VERSION : ($UPDATE)"
+        fi 
+        echo "$VERSION => $NEW_VERSION ($UPDATE)"
       env:
         VERSION: ${{ steps.extract_version.outputs.version }}
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
