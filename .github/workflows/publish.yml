@@ -18,12 +18,13 @@ jobs:
       env:
         VERSION: ${{ steps.extract_version.outputs.version }}
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
-    id: version
-    run: |  
-      if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
-      run: echo "::set-output name=new::$(cat .VERSION)"
-      env:
-        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
+    - name: Set version
+      id: version
+      run: |  
+        if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
+        run: echo "::set-output name=new::$(cat .VERSION)"
+        env:
+          NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
     - name: Publish
       if: steps.version.outputs.new  
       env:
