@@ -31,6 +31,7 @@ jobs:
         echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> ~/.npmrc
 
         git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+        npm install -g np
         npm install
         npm run build:dist
         npm run build:readme
