@@ -10,7 +10,7 @@ git add dist
 git add package-lock.json
 git add readme.md
 git commit -n -m "Built dist for $NEW_VERSION"
-echo "UPDATING VERSION to $NEW_VERSION ($UPDATE)"
+echo "Updating to $NEW_VERSION"
 
 np $NEW_VERSION
 git push origin master
