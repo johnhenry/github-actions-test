@@ -24,8 +24,8 @@ jobs:
       run: echo "::set-output name=new::$(cat .VERSION)"
       env:
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
-        - name: Publish
-      if: steps.version.outputs.new
+    - name: Publish
+      if: steps.version.outputs.new  
       env:
         NEW_VERSION: ${{ steps.version.outputs.new }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
