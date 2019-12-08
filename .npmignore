@@ -1,3 +1,6 @@
-.github/
-script/
-src/
+# Ignore everything
+*
+
+# But not these files...
+!package.json
+!*dist/
