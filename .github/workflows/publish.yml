@@ -8,9 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
-      uses: actions/checkout@v1.0.0
-    - name: Prepare repository
-      run: git checkout "${GITHUB_REF:11}"
+      uses: actions/checkout@v2-beta
     - name: Extract version
       id: extract_version
       run: |
@@ -20,11 +18,26 @@ jobs:
       env:
         VERSION: ${{ steps.extract_version.outputs.version }}
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
-    - name: Publish
+    id: version
+    run: |  
       if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
+      run: echo "::set-output name=new::$(cat .VERSION)"
       env:
-        VERSION: ${{ steps.extract_version.outputs.version }}
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
+        - name: Publish
+      if: steps.version.outputs.new
+      env:
+        NEW_VERSION: ${{ steps.version.outputs.new }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       uses: ./.github/workflows/publish/
+    - name: Checkout2
+      if: steps.version.outputs.new
+      uses: actions/checkout@v2-beta
+      with:
+        ref: develop
+    - name: Publish2
+      if: steps.version.outputs.new
+      run: |
+        git pull origin master
+        git push origin develop
