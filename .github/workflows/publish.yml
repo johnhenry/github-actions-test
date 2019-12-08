@@ -5,7 +5,7 @@ on:
     - master
 jobs:
   Publish_Workflow:
-    runs-on: node:12.6-stretch
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
       uses: actions/checkout@v1.0.0
@@ -13,8 +13,8 @@ jobs:
       run: git checkout "${GITHUB_REF:11}"
     - name: Extract version
       id: extract_version
-      run: | 
-        sudo apt-get update && sudo apt-get install -y jq 
+      run: |
+        sudo apt-get install -y jq 
         echo "::set-output name=version::$(cat package.json | jq -r ".version")"
         echo "::set-output name=new_version::$(cat .VERSION)"
       env:
@@ -28,7 +28,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       run: |
-        apt-get update && apt-get install -y git
+        sudo apt-get install -y jq 
+        curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+sudo apt-get install -y nodejs
         npm install -g np 
         # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
         UPDATE='NO UPDATE'
