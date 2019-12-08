@@ -5,21 +5,32 @@ on:
     - master
 jobs:
   Publish_Workflow:
-    runs-on: ubuntu-latest
+    runs-on: node:12.6-stretch
     steps:
     - name: Checkout repo
       uses: actions/checkout@v1.0.0
     - name: Prepare repository
       run: git checkout "${GITHUB_REF:11}"
-    - name: Install jq
-      run: sudo apt-get update && sudo apt-get install -y jq 
     - name: Extract version
       id: extract_version
-      run:  echo "::set-output name=version::$(cat package.json | jq -r ".version")" && echo "::set-output name=new_version::$(cat .VERSION)"
-    - name: Show upgrade
+      run: | 
+        sudo apt-get update && sudo apt-get install -y jq 
+        echo "::set-output name=version::$(cat package.json | jq -r ".version")"
+        echo "::set-output name=new_version::$(cat .VERSION)"
+      env:
+        VERSION: ${{ steps.extract_version.outputs.version }}
+        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
+    - name: publish
+      : ./.github/workflows/publish/
       if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
-      id: version_type
+      env:
+        VERSION: ${{ steps.extract_version.outputs.version }}
+        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       run: |
+        apt-get update && apt-get install -y git
+        npm install -g np 
         # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
         UPDATE='NO UPDATE'
         version1=${VERSION//./ }
@@ -39,15 +50,18 @@ jobs:
         if [ $major1 -lt $major2 ]; then
             UPDATE='MAJOR'
         fi
+        echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> ~/.npmrc
+
+        git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+        npm install
+        npm run build:dist
+        npm run build:readme
+        git add dist
+        git add package-lock.json
+        git add readme.md
+        git commit -n -m "Built dist for $NEW_VERSION"
         echo "$VERSION => $NEW_VERSION ($UPDATE)"
-      env:
-        VERSION: ${{ steps.extract_version.outputs.version }}
-        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
-    - name: publish
-      uses: ./.github/workflows/publish/
-      if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
-      env:
-        VERSION: ${{ steps.extract_version.outputs.version }}
-        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
+        np $NEW_VERSION
+        git push origin master
+        git push --tags origin master
