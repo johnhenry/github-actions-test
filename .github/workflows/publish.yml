@@ -22,7 +22,7 @@ jobs:
       id: version
       run: |  
         if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
-        run: echo "::set-output name=new::$(cat .VERSION)"
+        run: echo "::set-output name=new::$(echo NEW_VERSION)"
         env:
           NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
     - name: Publish
