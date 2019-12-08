@@ -5,7 +5,7 @@ on:
       - '*/*'       # matches every branch containing a single '/'
       - '!master'   # excludes master
 jobs:
-  Test Workflow:
+  Test_Workflow:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
