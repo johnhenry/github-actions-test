@@ -6,7 +6,7 @@ LABEL "com.github.actions.color"="purple"
 LABEL "maintainer"="John Henry <john@iamjohnhenry.com>"
 
 ADD entrypoint.sh /entrypoint.sh
-RUN apt-get update && apt-get install -y git jq
+RUN apt-get update && apt-get install -y git
 RUN npm install -g np
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
