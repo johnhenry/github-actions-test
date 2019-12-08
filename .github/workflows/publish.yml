@@ -33,7 +33,6 @@ jobs:
         if [ $patch1 -lt $patch2 ]; then
             UPDATE='PATCH'
         fi
-
         if [ $minor1 -lt $minor2 ]; then
             UPDATE='MINOR'
         fi
