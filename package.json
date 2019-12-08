@@ -6,7 +6,7 @@
   "private": false,
   "scripts": {
     "build:dist": "sh ./script/build.src.sh",
-    "build:readme": "sh ./script/build.readme.sh",
+    "build:docs": "sh ./script/build.readme.sh",
     "test": "echo \"Tests passing\" && exit 0"
   },
   "author": "",
