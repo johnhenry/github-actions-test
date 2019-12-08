@@ -7,6 +7,7 @@ if [ "$VERSION" == "$NEW_VERSION" ]; then
     echo "CURRENT VERSION: $VERSION. NO UPDATE."
     exit 0
 else
+
     echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> ~/.npmrc
 
     # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
@@ -33,8 +34,10 @@ else
     git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
     npm install
     npm run build:dist
+    npm run build:readme
     git add dist
     git add package-lock.json
+    git add readme.md
     git commit -n -m "Built dist for $NEW_VERSION"
     echo "UPDATING VERSION: $VERSION => $NEW_VERSION ($UPDATE)"
 
