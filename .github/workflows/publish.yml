@@ -19,7 +19,7 @@ jobs:
     - name: Show upgrade
       if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
       id: version_type
-        # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
+      run: # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
         $UPDATE='NO UPDATE'
         version1=${VERSION//./ }
         version2=${NEW_VERSION//./ }
