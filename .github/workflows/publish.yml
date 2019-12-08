@@ -51,6 +51,6 @@ jobs:
         echo "Updating to $NEW_VERSION"
         npm version $NEW_VERSION
         npm publish
-        git tag -a $NEW_VERSION -m "v$NEW_VERSION"
-        git push origin master
-        git push --tags origin master
+        # git tag -a $NEW_VERSION -m "v$NEW_VERSION"
+        git push
+        # git push --tags
