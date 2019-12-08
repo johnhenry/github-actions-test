@@ -1,6 +1,6 @@
 {
   "name": "github-actions-test",
-  "version": "0.0.44",
+  "version": "0.0.45",
   "description": "",
   "main": "index.js",
   "build:dist": "echo \"Building...\" && exit 0",
