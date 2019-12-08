@@ -19,4 +19,9 @@ git checkout develop
 git merge master
 git push origin develop
 
+git fetch origin develop
+git checkout develop
+git merge master
+git push origin develop
+
 exit 0
