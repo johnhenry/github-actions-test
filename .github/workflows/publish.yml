@@ -19,8 +19,9 @@ jobs:
     - name: Show upgrade
       if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
       id: version_type
-      run: # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
-        $UPDATE='NO UPDATE'
+      run: |
+        # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
+        UPDATE='NO UPDATE'
         version1=${VERSION//./ }
         version2=${NEW_VERSION//./ }
         patch1=$(echo $version1 | awk '{print $3}')
@@ -29,7 +30,6 @@ jobs:
         patch2=$(echo $version2 | awk '{print $3}')
         minor2=$(echo $version2 | awk '{print $2}')
         major2=$(echo $version2 | awk '{print $1}')
-        UPDATE=''
         if [ $patch1 -lt $patch2 ]; then
             UPDATE='PATCH'
         fi
@@ -38,7 +38,7 @@ jobs:
         fi
         if [ $major1 -lt $major2 ]; then
             UPDATE='MAJOR'
-        fi 
+        fi
         echo "$VERSION => $NEW_VERSION ($UPDATE)"
       env:
         VERSION: ${{ steps.extract_version.outputs.version }}
