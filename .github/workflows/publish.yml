@@ -30,7 +30,7 @@ jobs:
       run: |
         sudo apt-get install -y jq 
         curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
-sudo apt-get install -y nodejs
+        sudo apt-get install -y nodejs
         npm install -g np 
         # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
         UPDATE='NO UPDATE'
