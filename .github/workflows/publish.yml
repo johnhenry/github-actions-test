@@ -21,7 +21,6 @@ jobs:
         VERSION: ${{ steps.extract_version.outputs.version }}
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
     - name: publish
-      : ./.github/workflows/publish/
       if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
       env:
         VERSION: ${{ steps.extract_version.outputs.version }}
