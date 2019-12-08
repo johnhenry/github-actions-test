@@ -24,13 +24,3 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       uses: ./.github/workflows/publish/
-    - name: Checkout2
-      if: steps.version.outputs.new
-      uses: actions/checkout@v2-beta
-      with:
-        ref: develop
-    - name: Publish2
-      if: steps.version.outputs.new
-      run: |
-        git pull origin master
-        git push origin develop
