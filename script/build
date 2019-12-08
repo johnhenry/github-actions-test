@@ -1,2 +1,2 @@
 mkdir -p ./dist
-cat ./src/index > ./dist/index
+echo "This is the time: $(date)" > ./dist/index

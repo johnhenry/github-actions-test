@@ -3,10 +3,10 @@
   "version": "0.0.48",
   "description": "",
   "main": "index.js",
-  "build:dist": "echo \"Building...\" && exit 0",
-  "build:readme": "echo \"Building Readme...\" && exit 0",
   "private": false,
   "scripts": {
+    "build:dist": "sh ./script/build",
+    "build:readme": "echo \"Building Readme...\" && exit 0",
     "test": "echo \"Tests passing\" && exit 0"
   },
   "author": "",
