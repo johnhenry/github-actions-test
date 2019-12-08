@@ -1,0 +1,1 @@
+echo "$(cat src/readme.md)" > ./readme.md
