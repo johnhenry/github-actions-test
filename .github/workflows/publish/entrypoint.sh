@@ -15,6 +15,8 @@ echo "UPDATING VERSION: $VERSION => $NEW_VERSION ($UPDATE)"
 np $NEW_VERSION
 git push origin master
 git push --tags origin master
+
+git fetch origin develop
 git checkout develop
 git merge master
 git push origin develop
