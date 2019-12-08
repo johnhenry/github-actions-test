@@ -49,8 +49,9 @@ jobs:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       run: |
         echo "//registry.npmjs.org/:_authToken=$NPM_AUTH_TOKEN" >> ~/.npmrc
-        npm install -g np
         echo "Updating to $NEW_VERSION"
-        np $NEW_VERSION
+        npm version $NEW_VERSION
+        npm publish $NEW_VERSION
+        git tag -a $NEW_VERSION -m "v$NEW_VERSION"
         git push origin master
         git push --tags origin master
