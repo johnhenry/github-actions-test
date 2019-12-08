@@ -16,16 +16,11 @@ jobs:
     - name: Extract version
       id: extract_version
       run:  echo "::set-output name=version::$(cat package.json | jq -r ".version")" && echo "::set-output name=new_version::$(cat .VERSION)"
-    # - name: publish
-    #   uses: ./.github/workflows/publish/
-    #   if: steps['Extract version'].outputs.version != steps['Extract version'].outputs.new_version
-    #   env:
-    #     VERSION: ${{ steps.extract_version.outputs.version }}
-    #     NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-    - name: test
-      run: echo "$VERSION => $NEW_VERSION"
+    - name: publish
+      uses: ./.github/workflows/publish/
+      if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
       env:
         VERSION: ${{ steps.extract_version.outputs.version }}
         NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
