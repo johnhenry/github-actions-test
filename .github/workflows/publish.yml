@@ -23,7 +23,7 @@ jobs:
       id: version
       run: |
         NEW_VERSION=$(cat .VERSION) 
-        if ["$(node -e 'console.log(require(`./package.json`).version)')" != "$NEW_VERSION" ]; then
+        if [ "$(node -e 'console.log(require(`./package.json`).version)')" != "$NEW_VERSION" ]; then
           echo "::set-output name=new::$(echo $NEW_VERSION)"
         fi
     - name: Build docs and add artifacts
