@@ -13,18 +13,14 @@ jobs:
       run: git checkout "${GITHUB_REF:11}"
     - name: Install jq
       run: sudo apt-get update && sudo apt-get install -y jq 
-    - name: ext
+    - name: Extract version
+      id: extract_version
       run:  echo "::set-output name=version::$(cat package.json | jq -r ".version")" && echo "::set-output name=new_version::$(cat .VERSION)"
-    # - name: publish
-    #   uses: ./.github/workflows/publish/
-    #   # if: steps['Extract version'].outputs.version != steps['Extract version'].outputs.new_version
-    #   env:
-    #     VERSION: ${{ steps.ext.outputs.version }}
-    #     NEW_VERSION: ${{ steps.ext.outputs.new_version }}
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-    - name: out
-      run: echo "VERSION:$VERSION NEW_VERSION:$NEW_VERSION"
+    - name: publish
+      uses: ./.github/workflows/publish/
+      if: steps['Extract version'].outputs.version != steps['Extract version'].outputs.new_version
       env:
-        VERSION: ${{ steps.ext.outputs.version }}
-        NEW_VERSION: ${{ steps.ext.outputs.new_version }}
+        VERSION: ${{ steps.extract_version.outputs.version }}
+        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
