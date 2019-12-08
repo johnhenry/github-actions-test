@@ -16,6 +16,34 @@ jobs:
     - name: Extract version
       id: extract_version
       run:  echo "::set-output name=version::$(cat package.json | jq -r ".version")" && echo "::set-output name=new_version::$(cat .VERSION)"
+    - name: Show upgrade
+      if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
+      id: version_type
+        # https://gist.github.com/maxrimue/ca69ee78081645e1ef62
+        $UPDATE='NO UPDATE'
+        version1=${VERSION//./ }
+        version2=${NEW_VERSION//./ }
+        patch1=$(echo $version1 | awk '{print $3}')
+        minor1=$(echo $version1 | awk '{print $2}')
+        major1=$(echo $version1 | awk '{print $1}')
+        patch2=$(echo $version2 | awk '{print $3}')
+        minor2=$(echo $version2 | awk '{print $2}')
+        major2=$(echo $version2 | awk '{print $1}')
+        UPDATE=''
+        if [ $patch1 -lt $patch2 ]; then
+            UPDATE='PATCH'
+        fi
+
+        if [ $minor1 -lt $minor2 ]; then
+            UPDATE='MINOR'
+        fi
+        if [ $major1 -lt $major2 ]; then
+            UPDATE='MAJOR'
+        fi
+        echo "$VERSION => $NEW_VERSION : ($UPDATE)"
+      env:
+        VERSION: ${{ steps.extract_version.outputs.version }}
+        NEW_VERSION: ${{ steps.extract_version.outputs.new_version }}
     - name: publish
       uses: ./.github/workflows/publish/
       if: steps.extract_version.outputs.version != steps.extract_version.outputs.new_version
