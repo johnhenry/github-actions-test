@@ -1,6 +1,6 @@
 #!/bin/bash -l
 
-VERSION=$(git show HEAD~0:package.json | jq -r ".version")
+VERSION=$(cat package.json | jq -r ".version")
 NEW_VERSION=$(cat .VERSION) 
 
 if [ "$VERSION" == "$NEW_VERSION" ]; then
@@ -46,6 +46,11 @@ else
         UPDATE='MAJOR'
     fi
     git config --global user.name '(none)' && git config --global user.email 'noreply@github.com' && git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/$GITHUB_REPOSITORY
+    npm install
+    npm run build:dist
+    git add dist
+    git add package-lock.json
+    git commit -n -m "Built dist for $NEW_VERSION"
     echo "UPDATING VERSION: $VERSION => $NEW_VERSION ($UPDATE)"
 
     np $NEW_VERSION

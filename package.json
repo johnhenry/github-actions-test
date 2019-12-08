@@ -3,6 +3,7 @@
   "version": "0.0.42",
   "description": "",
   "main": "index.js",
+  "build:dist": "echo \"Building\" && exit 0",
   "private": false,
   "scripts": {
     "test": "echo \"Tests passing\" && exit 0"

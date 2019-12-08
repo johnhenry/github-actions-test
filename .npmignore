@@ -3,4 +3,5 @@
 
 # But not these files...
 !package.json
-!*dist/
+!dist/
+!dist/**/*
